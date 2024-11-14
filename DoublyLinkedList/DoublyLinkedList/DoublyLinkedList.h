@@ -63,6 +63,12 @@ namespace dll {
         ~DoublyLinkedList();
 
         /**
+         * @brief Обмен содержимым.
+         * @param other Обмениваемый список.
+        */
+        void Swap(DoublyLinkedList<T>& other) noexcept;
+
+        /**
          * @brief Оператор присваивания
          * @param other Ссылка на другой объект DoublyLinkedList, который будет присвоен
          * @return Ссылка на текущий объект
@@ -93,6 +99,13 @@ namespace dll {
          * @throws std::out_of_range Если список пуст
          */
         void pop_back();
+
+        /**
+         * @brief Вставка элемента по индексу
+         * @param index Позиция для вставки элемента
+         * @param value Значение элемента
+         */
+        void insert(size_t index, const T& value);
 
         /**
          * @brief Метод для удаления первого элемента
@@ -168,14 +181,18 @@ namespace dll {
     }
 
     template<typename T>
+    inline void DoublyLinkedList<T>::Swap(DoublyLinkedList<T>& other) noexcept
+    {
+        std::swap(other.capacity, this->capacity);
+        std::swap(other.data, this->data);
+        std::swap(other.size, this->size);
+    }
+
+    template<typename T>
     DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList& other) {
         if (this != &other) {
-            clear();
-            Node<T>* current = other.head;
-            while (current) {
-                push_back(current->data);
-                current = current->next;
-            }
+            DoublyLinkedList<T> temp(other);
+            this->Swap(temp);
         }
         return *this;
     }
@@ -243,6 +260,32 @@ namespace dll {
         else tail = nullptr; 
         delete temp;
         --size;
+    }
+
+    template<typename T>
+    void DoublyLinkedList<T>::insert(size_t index, const T& value) {
+        if (index > size) throw std::out_of_range("Index out of bounds");
+
+        if (index == 0) {
+            push_front(value);
+            return;
+        }
+        if (index == size) {
+            push_back(value);
+            return;
+        }
+
+        Node<T>* current = head;
+        for (size_t i = 0; i < index; ++i) {
+            current = current->next;
+        }
+
+        Node<T>* newNode = new Node<T>(value);
+        newNode->next = current;
+        newNode->prev = current->prev;
+        if (current->prev) current->prev->next = newNode;
+        current->prev = newNode;
+        ++size;
     }
 
     template<typename T>
