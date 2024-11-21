@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../DoublyLinkedList/DoublyLinkedList.h"
+#include "../DoublyLinkedList/Point.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -19,12 +20,31 @@ namespace dll
             // Assert
             Assert::IsTrue(isEmpty);
         }
+        TEST_METHOD(IsEmptyStr_ValidData_Success)
+        {
+            // Arrange
+            DoublyLinkedList<std::string> list{};
+            // Act
+            bool isEmpty = list.IsEmpty();
+            // Assert
+            Assert::IsTrue(isEmpty);
+        }
+        TEST_METHOD(IsEmptyPoint_ValidData_Success)
+        {
+            // Arrange
+            DoublyLinkedList<Point> list{};
+            // Act
+            bool isEmpty = list.IsEmpty();
+            // Assert
+            Assert::IsTrue(isEmpty);
+        }
         TEST_METHOD(PushBackInt_ValidData_Success)
         {
             // Arrange
             DoublyLinkedList<int> list{ 1, 2, 3 };
-            std::string expected = "1, 2, 3";
+            std::string expected = "1, 2, 3, 5";
             // Act
+            list.PushBack(5);
             std::string actual = list.ToString();
             // Assert
             Assert::AreEqual(actual, expected);
@@ -40,6 +60,20 @@ namespace dll
             std::string actual = list.ToString();
             // Assert
             Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(PushBackPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2 };
+            std::string expected = "1 1, 1 2, 1 3";
+            // Act
+            list.PushBack(point3);
+            std::string actual = list.ToString();
+            // Assert
+            Assert::AreEqual(actual, expected);
         }
         TEST_METHOD(PushFrontInt_ValidData_Success)
         {
@@ -66,6 +100,22 @@ namespace dll
             // Assert
             Assert::AreEqual(expected, actual);
         }
+        TEST_METHOD(PushFrontPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list;
+            std::string expected = "1 3, 1 1, 1 2";
+            // Act
+            list.PushFront(point2);
+            list.PushFront(point1);
+            list.PushFront(point3);
+            std::string actual = list.ToString();
+            // Assert
+            Assert::AreEqual(expected, actual);
+        }
         TEST_METHOD(PopBackInt_ValidData_Success)
         {
             // Arrange
@@ -80,8 +130,22 @@ namespace dll
         TEST_METHOD(PopBackStr_ValidData_Success)
         {
             // Arrange
-            DoublyLinkedList < std::string > list{ "Hello", "World" };
+            DoublyLinkedList <std::string> list{ "Hello", "World" };
             std::string expected = "Hello";
+            // Act
+            list.PopBack();
+            std::string actual = list.ToString();
+            // Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(PopBackPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2, point3 };
+            std::string expected = "1 1, 1 2";
             // Act
             list.PopBack();
             std::string actual = list.ToString();
@@ -99,13 +163,27 @@ namespace dll
             // Assert
             Assert::AreEqual(expected, actual);
         }
-        TEST_METHOD(PopBackStr_ValidData_Success)
+        TEST_METHOD(PopFrontStr_ValidData_Success)
         {
             // Arrange
-            DoublyLinkedList < std::string > list{ "Hello", "World" };
+            DoublyLinkedList <std::string> list{ "Hello", "World" };
             std::string expected = "World";
             // Act
             list.PopBack();
+            std::string actual = list.ToString();
+            // Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(PopFrontPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2, point3 };
+            std::string expected = "1 2, 1 3";
+            // Act
+            list.PopFront();
             std::string actual = list.ToString();
             // Assert
             Assert::AreEqual(expected, actual);
@@ -128,6 +206,20 @@ namespace dll
             std::string expected = "Hello, My, World";
             // Act
             list.Insert(1, "My");
+            std::string actual = list.ToString();
+            // Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(InsertPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2};
+            std::string expected = "1 1, 1 3, 1 2";
+            // Act
+            list.Insert(1, point3);
             std::string actual = list.ToString();
             // Assert
             Assert::AreEqual(expected, actual);
@@ -161,6 +253,19 @@ namespace dll
             // Arrange
             DoublyLinkedList<std::string> list{ "Hello", "World" };
             std::string expected = "Hello, World";
+            //Act
+            std::string actual = list.ToString();
+            //Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(ToStringPoint_ValidData_Success)
+        {
+            // Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2, point3 };
+            std::string expected = "1 1, 1 2, 1 3";
             //Act
             std::string actual = list.ToString();
             //Assert
