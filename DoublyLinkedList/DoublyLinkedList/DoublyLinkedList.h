@@ -5,7 +5,8 @@
 #include <initializer_list>
 #include <string>
 
-namespace dll {
+namespace dll 
+{
 
     /**
      * @brief Узел двусвязного списка
@@ -86,44 +87,44 @@ namespace dll {
          * @brief Метод для добавления элемента в конец списка
          * @param value Значение, которое нужно добавить
          */
-        void push_back(const T& value);
+        void PushBack(const T& value);
 
         /**
          * @brief Метод для добавления элемента в начало списка
          * @param value Значение, которое нужно добавить
          */
-        void push_front(const T& value);
+        void PushFront(const T& value);
 
         /**
          * @brief Метод для удаления последнего элемента
          * @throws std::out_of_range Если список пуст
          */
-        void pop_back();
+        void PopBack();
 
         /**
          * @brief Вставка элемента по индексу
          * @param index Позиция для вставки элемента
          * @param value Значение элемента
          */
-        void insert(size_t index, const T& value);
+        void Insert(size_t index, const T& value);
 
         /**
          * @brief Метод для удаления первого элемента
          * @throws std::out_of_range Если список пуст
          */
-        void pop_front();
+        void PopFront();
 
         /**
          * @brief Метод для проверки, пустой ли список
          * @return true, если список пуст; false в противном случае
          */
-        bool is_empty() const;
+        bool IsEmpty() const;
 
         /**
          * @brief Метод для получения строкового представления списка
          * @return Строка, представляющая содержимое списка
          */
-        std::string to_string() const;
+        std::string ToString() const;
 
         /**
          * @brief Оператор вывода для класса DoublyLinkedList
@@ -141,7 +142,7 @@ namespace dll {
         /**
          * @brief Метод для очистки списка
          */
-        void clear();
+        void Clear();
     };
 
 }
@@ -153,44 +154,48 @@ namespace dll {
 
     template<typename T>
     DoublyLinkedList<T>::DoublyLinkedList(std::initializer_list<T> values) : DoublyLinkedList() {
-        for (const auto& value : values) {
-            push_back(value);
+        for (const auto& value : values) 
+        {
+            PushBack(value);
         }
     }
 
     template<typename T>
     DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& other) : DoublyLinkedList() {
         Node<T>* current = other.head;
-        while (current) {
-            push_back(current->data);
+        while (current) 
+        {
+            PushBack(current->data);
             current = current->next;
         }
     }
 
     template<typename T>
     DoublyLinkedList<T>::DoublyLinkedList(DoublyLinkedList<T>&& other) noexcept
-        : head(other.head), tail(other.tail), size(other.size) {
+        : head(other.head), tail(other.tail), size(other.size) 
+    {
         other.head = nullptr;
         other.tail = nullptr;
         other.size = 0;
     }
 
     template<typename T>
-    DoublyLinkedList<T>::~DoublyLinkedList() {
-        clear();
+    DoublyLinkedList<T>::~DoublyLinkedList() 
+    {
+        Clear();
     }
 
     template<typename T>
     inline void DoublyLinkedList<T>::Swap(DoublyLinkedList<T>& other) noexcept
     {
-        std::swap(other.capacity, this->capacity);
-        std::swap(other.data, this->data);
-        std::swap(other.size, this->size);
+        std::swap(head, other.head);
+        std::swap(tail, other.tail);
     }
 
     template<typename T>
     DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList& other) {
-        if (this != &other) {
+        if (this != &other) 
+        {
             DoublyLinkedList<T> temp(other);
             this->Swap(temp);
         }
@@ -199,123 +204,157 @@ namespace dll {
 
     template<typename T>
     DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(DoublyLinkedList&& other) noexcept {
-        if (this != &other) {
-            clear();
-            head = other.head;
-            tail = other.tail;
-            size = other.size;
-
-            other.head = nullptr;
-            other.tail = nullptr;
-            other.size = 0;
-        }
+        if (this != &other)
+            {
+                this->Swap(other);
+            }
         return *this;
     }
 
     template<typename T>
-    void DoublyLinkedList<T>::push_back(const T& value) {
+    void DoublyLinkedList<T>::PushBack(const T& value) {
         Node<T>* newNode = new Node<T>(value);
-        if (tail) {
+        if (head == nullptr) 
+        {
+            head = newNode;
+        }
+        else 
+        {
             tail->next = newNode;
             newNode->prev = tail;
-            tail = newNode;
         }
-        else {
-            head = tail = newNode;
-        }
-        ++size;
     }
 
     template<typename T>
-    void DoublyLinkedList<T>::push_front(const T& value) {
+    void DoublyLinkedList<T>::PushFront(const T& value) 
+    {
         Node<T>* newNode = new Node<T>(value);
-        if (head) {
+        if (head == nullptr) 
+        {
+            head = newNode;
+            tail = newNode;
+        }
+        else 
+        {
             head->prev = newNode;
             newNode->next = head;
             head = newNode;
         }
-        else {
-            head = tail = newNode;
-        }
-        ++size;
     }
 
     template<typename T>
-    void DoublyLinkedList<T>::pop_back() {
-        if (is_empty()) throw std::out_of_range("List is empty!");
-        Node<T>* temp = tail;
-        tail = tail->prev;
-        if (tail) tail->next = nullptr;
-        else head = nullptr; 
-        delete temp;
-        --size;
-    }
-
-    template<typename T>
-    void DoublyLinkedList<T>::pop_front() {
-        if (is_empty()) throw std::out_of_range("List is empty!");
-        Node<T>* temp = head;
-        head = head->next;
-        if (head) head->prev = nullptr;
-        else tail = nullptr; 
-        delete temp;
-        --size;
-    }
-
-    template<typename T>
-    void DoublyLinkedList<T>::insert(size_t index, const T& value) {
-        if (index > size) throw std::out_of_range("Index out of bounds");
-
-        if (index == 0) {
-            push_front(value);
+    void DoublyLinkedList<T>::PopBack() 
+    {
+        if (tail == nullptr)
+        {
             return;
         }
-        if (index == size) {
-            push_back(value);
+        if (head == tail)
+        {
+            delete tail;
+            head = nullptr;
+            tail = nullptr;
+        }
+        else
+        {
+            Node<T>* temp = tail;
+            tail = tail->prev;
+            tail->next = nullptr;
+            delete temp;
+        }
+    }
+
+    template<typename T>
+    void DoublyLinkedList<T>::PopFront() 
+    {
+        if (head == nullptr)
+        {
             return;
         }
+        if (head == tail)
+        {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        }
+        else
+        {
+            Node<T>* temp = head;
+            head = head->next;
+            head->prev = nullptr;
+            delete temp;
+        }
+    }
 
+    template<typename T>
+    void DoublyLinkedList<T>::Insert(size_t index, const T& value) 
+    {
+        if (index > size)
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        if (index == 0) 
+        {
+            PushFront(value);
+            return;
+        }
+        if (index == size) 
+        {
+            PushBack(value);
+            return;
+        }
         Node<T>* current = head;
-        for (size_t i = 0; i < index; ++i) {
+        for (size_t i = 0; i < index; ++i)
+        {
             current = current->next;
         }
-
         Node<T>* newNode = new Node<T>(value);
         newNode->next = current;
         newNode->prev = current->prev;
-        if (current->prev) current->prev->next = newNode;
+        if (current->prev) 
+        {
+            current->prev->next = newNode;
+        }
         current->prev = newNode;
         ++size;
     }
 
     template<typename T>
-    bool DoublyLinkedList<T>::is_empty() const {
-        return size == 0;
+    bool DoublyLinkedList<T>::IsEmpty() const 
+    {
+        return head == nullptr;
     }
 
     template<typename T>
-    std::string DoublyLinkedList<T>::to_string() const {
+    std::string DoublyLinkedList<T>::ToString() const 
+    {
         std::ostringstream oss;
-        oss << "[";
         Node<T>* current = head;
-        while (current) {
+        while (current != nullptr) 
+        {
             oss << current->data;
             current = current->next;
-            if (current) oss << ", ";
+            if (current->next != nullptr) 
+            { 
+                oss << ", "; 
+            }
+            current = current->next;
         }
-        oss << "]";
         return oss.str();
     }
 
     template<typename T>
-    void DoublyLinkedList<T>::clear() {
-        while (!is_empty()) {
-            pop_front();
+    void DoublyLinkedList<T>::Clear() 
+    {
+        while (!IsEmpty()) 
+        {
+            PopFront();
         }
     }
 
     template<typename T>
-    std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T>& list) {
-        return out << list.to_string();
+    std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T>& list) 
+    {
+        return out << list.ToString();
     }
 }
