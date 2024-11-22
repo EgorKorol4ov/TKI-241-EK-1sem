@@ -1,20 +1,24 @@
 ﻿#include <iostream>
 #include "..DoublyLinkedList\DoublyLinkedList.h"
 
-int main() {
-    dll::DoublyLinkedList<int> list = { 1, 2, 3, 4 };
-    list.push_back(5);
-    list.push_front(0);
-    std::cout << "Содержимое списка: " << list << std::endl;
+namespace dll
+{
+    int main() 
+    {
+        DoublyLinkedList<int> list = { 1, 2, 3, 4 };
+        list.PushBack(5);
+        list.PushFront(0);
+        std::cout << "Содержимое списка: " << list << std::endl;
 
-    list.pop_back();
-    std::cout << "После pop_back: " << list << std::endl;
+        list.PopBack();
+        std::cout << "После PopBack: " << list << std::endl;
 
-    list.pop_front();
-    std::cout << "После pop_front: " << list << std::endl;
+        list.PopFront();
+        std::cout << "После PopFront: " << list << std::endl;
 
-    list.clear();
-    std::cout << "После очистки: " << list
+        list.Clear();
+        std::cout << "После очистки: " << list;
 
         return 0;
+    }
 }

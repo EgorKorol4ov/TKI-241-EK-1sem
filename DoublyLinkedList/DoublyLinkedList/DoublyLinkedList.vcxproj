@@ -128,6 +128,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="Point.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

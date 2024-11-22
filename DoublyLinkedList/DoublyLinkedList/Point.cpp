@@ -24,7 +24,7 @@ namespace dll
     {
         std::wstringstream buffer{};
         buffer << point->x << L" " << point->y;
-        return buffer.str();;
+        return buffer.str();
     }
 
     std::ostream& operator<<(std::ostream& out, const Point& point)
