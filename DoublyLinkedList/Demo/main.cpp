@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "..DoublyLinkedList\DoublyLinkedList.h"
+#include "../DoublyLinkedList/DoublyLinkedList.h"
 
 namespace dll
 {
