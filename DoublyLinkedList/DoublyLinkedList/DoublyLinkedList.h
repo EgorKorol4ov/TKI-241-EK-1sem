@@ -102,17 +102,35 @@ namespace dll
         void PopBack();
 
         /**
-         * @brief Вставка элемента по индексу
-         * @param index Позиция для вставки элемента
-         * @param value Значение элемента
-         */
-        void Insert(size_t index, const T& value);
-
-        /**
          * @brief Метод для удаления первого элемента
          * @throws std::out_of_range Если список пуст
          */
         void PopFront();
+
+        /**
+        * @brief Даёт доступ к последнему элементу списка
+        * @return Значение последнего элемента списка
+        */
+        T PeekBack() const;
+
+        /**
+        * @brief Даёт доступ к первому элементу списка
+        * @return Значение первого элемента списка
+        */
+        T PeekFront() const;
+
+        /**
+        * @brief Вставка элемента по индексу
+        * @param index Позиция для вставки элемента
+        * @param value Значение элемента
+        */
+        void Insert(size_t index, const T& value);
+
+        /**
+        * @brief Удаление элемента по индексу
+        * @param index Позиция для удаления элемента
+        */
+        void Remove(size_t index);
 
         /**
          * @brief Метод для проверки, пустой ли список
@@ -163,7 +181,7 @@ namespace dll {
     template<typename T>
     DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& other) : DoublyLinkedList() {
         Node<T>* current = other.head;
-        while (current) 
+        while (current != nullptr) 
         {
             PushBack(current->data);
             current = current->next;
@@ -188,6 +206,7 @@ namespace dll {
     template<typename T>
     inline void DoublyLinkedList<T>::Swap(DoublyLinkedList<T>& other) noexcept
     {
+        std::swap(size, other.size);
         std::swap(head, other.head);
         std::swap(tail, other.tail);
     }
@@ -288,6 +307,26 @@ namespace dll {
     }
 
     template<typename T>
+    T DoublyLinkedList<T>::PeekBack() const
+    {
+        if (IsEmpty())
+        {
+            throw std::runtime_error("List is empty");
+        }
+        return tail->data;
+    }
+
+    template<typename T>
+    inline T DoublyLinkedList<T>::PeekFront() const
+    {
+        if (isEmpty())
+        {
+            throw std::runtime_error("List is empty");
+        }
+        return head->data;
+    }
+
+    template<typename T>
     void DoublyLinkedList<T>::Insert(size_t index, const T& value) 
     {
         if (index > size)
@@ -318,6 +357,30 @@ namespace dll {
         }
         current->prev = newNode;
         ++size;
+    }
+
+    template<typename T>
+    inline void DoublyLinkedList<T>::Remove(size_t index)
+    {
+        if (index >= size) {
+            throw std::out_of_range("Index out of bounds");
+        }
+        if (index == 0) {
+            PopFront();
+            return;
+        }
+        if (index == size - 1) {
+            PopBack();
+            return;
+        }
+        Node<T>* current = head;
+        for (size_t i = 0; i < index; ++i) {
+            current = current->next;
+        }
+        current->prev->next = current->next;
+        current->next->prev = current->prev;
+        delete current;
+        --size;
     }
 
     template<typename T>

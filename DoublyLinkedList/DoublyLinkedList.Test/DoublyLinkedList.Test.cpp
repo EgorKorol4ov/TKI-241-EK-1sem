@@ -271,5 +271,102 @@ namespace dll
             //Assert
             Assert::AreEqual(expected, actual);
         }
+        TEST_METHOD(RemoveInt_ValidData_Success)
+        {
+            //Arrange 
+            DoublyLinkedList<int> list{ 1, 3, 5, 8, 7 };
+            std::string expected = "1, 3, 8, 7";
+            //Act
+            list.Remove(2);
+            std::string actual = list.ToString();
+            //Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(RemoveStr_ValidData_Success)
+        {
+            //Arrange 
+            DoublyLinkedList<std::string> list{ "Hello", "My", "World" };
+            std::string expected = "Hello, World";
+            //Act
+            list.Remove(1);
+            std::string actual = list.ToString();
+            //Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(RemovePoint_ValidData_Success)
+        {
+            //Arrange 
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            Point point4(1, 4);
+            DoublyLinkedList<Point> list{ point1, point2, point3, point4 };
+            std::string expected = "1 1, 1 3, 1 4";
+            //Act
+            list.Remove(1);
+            std::string actual = list.ToString();
+            //Assert
+            Assert::AreEqual(expected, actual);
+        }
+        TEST_METHOD(PeekBackInt_ValidData_Success)
+        {
+            //Arrange
+            DoublyLinkedList<int> list{ 1, 2, 3 };
+            //Act
+            int result = list.PeekBack();
+            //Assert
+            Assert::AreEqual(3, result);
+        }
+        TEST_METHOD(PeekBackStr_ValidData_Success)
+        {
+            //Arrange
+            DoublyLinkedList<std::string> list{ "Hello", "World"};
+            //Act
+            std::string result = list.PeekBack();
+            //Assert
+            Assert::AreEqual("World", result);
+        }
+        TEST_METHOD(PeekBackPoint_ValidData_Success)
+        {
+            //Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2, point3 };
+            //Act
+            Point result = list.PeekBack();
+            //Assert
+            Assert::AreEqual(point3, result);
+        }
+        TEST_METHOD(PeekFrontInt_ValidData_Success)
+        {
+            //Arrange
+            DoublyLinkedList<int> list{ 1, 2, 3 };
+            //Act
+            int result = list.PeekFront();
+            //Assert
+            Assert::AreEqual(1, result);
+        }
+        TEST_METHOD(PeekBackInt_ValidData_Success)
+        {
+            //Arrange
+            DoublyLinkedList<std::string> list{ "Hello", "World" };
+            //Act
+            std::string result = list.PeekFront();
+            //Assert
+            Assert::AreEqual("Hello", result);
+        }
+        TEST_METHOD(PeekBackInt_ValidData_Success)
+        {
+            //Arrange
+            Point point1(1, 1);
+            Point point2(1, 2);
+            Point point3(1, 3);
+            DoublyLinkedList<Point> list{ point1, point2, point3 };
+            //Act
+            Point result = list.PeekFront();
+            //Assert
+            Assert::AreEqual(point1, result);
+        }
 	};
 }
