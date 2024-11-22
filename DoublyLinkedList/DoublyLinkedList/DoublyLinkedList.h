@@ -222,6 +222,7 @@ namespace dll {
         {
             tail->next = newNode;
             newNode->prev = tail;
+            tail = newNode;
         }
     }
 
