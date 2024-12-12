@@ -1,17 +1,18 @@
 #pragma once
 #include <string>
-#include <vector>
-#include <memory>
-#include "Car.h"
+#include <chrono>
 
-class Accident {
-public:
-    std::string date;
-    std::string description;
-    std::vector<std::shared_ptr<Car>> involvedCars;
+class Accident final :public std::enable_shared_from_this<Accident>
+{
+    public:
+        std::chrono::system_clock::time_point date;
+        std::string description;
 
-    Accident(const std::string& date, const std::string& description);
+        Accident(const std::chrono::system_clock::time_point& date, const std::string& description);
 
-    void addCar(std::shared_ptr<Car> car);
-    std::string getInfo() const;
+        std::string getInfo() const;
+
+        std::string dateToString() const;
+
+        void setDateFromString(const std::string& dateStr);
 };

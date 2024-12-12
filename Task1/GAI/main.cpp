@@ -21,19 +21,6 @@ int main() {
     database->addCar(car2);
     database->addCar(car3);
 
-    database->markCarAsStolen(car1);
-
-    auto accident1 = std::make_shared<Accident>("2024-12-01", "Rear-end collision");
-    accident1->addCar(car2);
-    accident1->addCar(car3);
-    database->addAccident(accident1);
-
-    auto stolenCars = database->getStolenCars();
-    std::cout << "Stolen cars:\n";
-    for (const auto& car : stolenCars) {
-        std::cout << car->getInfo() << '\n';
-    }
-
     auto ownerOfCar = database->findOwnerByCar("XYZ789");
     if (ownerOfCar) {
         std::cout << "Owner of XYZ789: " << ownerOfCar->getInfo() << '\n';

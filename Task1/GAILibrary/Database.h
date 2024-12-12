@@ -1,30 +1,28 @@
-#include <vector>
-#include <memory>
+#pragma once
+#include <list>
 #include <string>
+#include <memory>
+#include <algorithm>
+#include <map>
 #include "Car.h"
 #include "Owner.h"
-#include "Accident.h"
-#include "StolenCarsRegistry.h"
 
-class Database {
-private:
-    std::vector<std::shared_ptr<Car>> cars;
-    std::vector<std::shared_ptr<Owner>> owners;
-    std::vector<std::shared_ptr<Accident>> accidents;
-    StolenCarsRegistry stolenCarsRegistry;
+class Database final : public std::enable_shared_from_this<Database>
+{
+    private:
+        std::vector<std::shared_ptr<Car>> cars;
+        std::vector<std::shared_ptr<Owner>> owners;
 
-public:
-    void addCar(const std::shared_ptr<Car>& car);
-    void addOwner(const std::shared_ptr<Owner>& owner);
-    void addAccident(const std::shared_ptr<Accident>& accident);
+    public:
+        void addCar(const std::shared_ptr<Car>& car);
+        void addOwner(const std::shared_ptr<Owner>& owner);
 
-    void markCarAsStolen(const std::shared_ptr<Car>& car);
-    void unmarkCarAsStolen(const std::string& plate);
+        std::shared_ptr<Car> findCarByPlate(const std::string& plate) const;
+        std::shared_ptr<Owner> findOwnerByCar(const std::string& plate) const;
 
-    std::shared_ptr<Car> findCarByPlate(const std::string& plate) const;
-    std::shared_ptr<Owner> findOwnerByCar(const std::string& plate) const;
-    std::shared_ptr<Car> findCarByEngineNumber(const std::string& engineNumber) const;
+        void removeCar(const std::string& plate);
+        void removeOwner(const std::string& name);
 
-    std::vector<std::shared_ptr<Car>> getStolenCars() const;
-    std::map<std::string, int> getMostStolenBrands() const;
+        std::string getCarsInfo() const;
+        std::string getOwnersInfo() const;
 };
