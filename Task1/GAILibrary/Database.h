@@ -14,6 +14,9 @@ class Database final : public std::enable_shared_from_this<Database>
         std::vector<std::shared_ptr<Owner>> owners;
 
     public:
+        Database() = default;
+        Database(const std::vector<std::shared_ptr<Car>>& cars, const std::vector<std::shared_ptr<Owner>>& owners);
+
         void addCar(const std::shared_ptr<Car>& car);
         void addOwner(const std::shared_ptr<Owner>& owner);
 

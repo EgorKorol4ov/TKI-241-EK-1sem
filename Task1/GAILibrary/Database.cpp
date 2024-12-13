@@ -1,5 +1,8 @@
 #include "Database.h"
 
+Database::Database(const std::vector<std::shared_ptr<Car>>& cars, const std::vector<std::shared_ptr<Owner>>& owners)
+    : cars(cars), owners(owners) {}
+
 void Database::addCar(const std::shared_ptr<Car>& car) 
 {
     cars.push_back(car);

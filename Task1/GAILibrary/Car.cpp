@@ -6,7 +6,7 @@ Car::Car(const std::string& plate, const std::string& brand, const std::string& 
 
 void Car::addAccident(const std::string& accident) 
 {
-    Accident.push_back(accident);
+    Accident push_back(accident);
 }
 
 std::string Car::getInfo() const 
