@@ -2,17 +2,16 @@
 #include <string>
 #include <chrono>
 
-class Accident final :public std::enable_shared_from_this<Accident>
+class Accident final 
 {
-    public:
-        std::chrono::system_clock::time_point date;
-        std::string description;
+public:
 
-        Accident(const std::chrono::system_clock::time_point& date, const std::string& description);
+    std::chrono::system_clock::time_point date;
+    std::string description;
 
-        std::string getInfo() const;
+    Accident(const std::chrono::system_clock::time_point& date, const std::string& description);
 
-        std::string dateToString() const;
-
-        void setDateFromString(const std::string& dateStr);
+    std::string getInfo() const;
+    std::string dateToString() const;
+    void setDateFromString(const std::string& dateStr);
 };

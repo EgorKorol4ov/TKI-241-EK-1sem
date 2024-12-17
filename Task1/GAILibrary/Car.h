@@ -1,24 +1,27 @@
 #pragma once
 #include <string>
 #include <memory>
+#include <vector>
 #include "Owner.h"
 #include "Accident.h"
 
-class Car final:public std::enable_shared_from_this<Car> 
-{
-    public:
-        std::string plateNumber;
-        std::string brand;
-        std::string model;
-        std::string color;
-        std::string engineNumber;
+class Car final {
+public:
+    std::string plateNumber;
+    std::string brand;
+    std::string model;
+    std::string color;
+    std::string engineNumber;
 
-        std::weak_ptr<Owner> currentOwner;
+    std::shared_ptr<Owner> currentOwner;
 
-        Car(const std::string& plate, const std::string& brand, const std::string& model,
-            const std::string& color, const std::string& engine);
+    std::vector<Accident> accidents; 
 
-        void addAccident(const std::string& accident);
-        void removeCar(const std::shared_ptr<Car>& car);
-        std::string getInfo() const;
+    Car(const std::string& plate, const std::string& brand, const std::string& model,
+        const std::string& color, const std::string& engine,
+        const std::shared_ptr<Owner>& owner);
+
+    void addAccident(const std::string& description); 
+    std::string getAccidentsInfo() const;            
+    std::string getInfo() const;
 };

@@ -8,8 +8,7 @@ Accident::Accident(const std::chrono::system_clock::time_point& date, const std:
 std::string Accident::getInfo() const 
 {
     std::ostringstream oss;
-    oss << "Date: " << dateToString() << "\n"
-        << "Description: " << description;
+    oss << "Date: " << dateToString() << "\nDescription: " << description;
     return oss.str();
 }
 

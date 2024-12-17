@@ -133,13 +133,11 @@
   <ItemGroup>
     <ClInclude Include="Accident.h" />
     <ClInclude Include="Car.h" />
-    <ClInclude Include="Database.h" />
     <ClInclude Include="Owner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accident.cpp" />
     <ClCompile Include="Car.cpp" />
-    <ClCompile Include="Database.cpp" />
     <ClCompile Include="Owner.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
