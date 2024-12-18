@@ -10,25 +10,27 @@ Car::Car(const std::string& plate, const std::string& brand, const std::string& 
     currentOwner->addCar(this);
 }
 
-void Car::addAccident(const std::string& description) 
+void Car::addAccident(const std::string& description)
 {
     auto now = std::chrono::system_clock::now();
-    accidents.emplace_back(now, description);
+    auto accident = std::make_shared<Accident>(now, description);
+    accident->setCar(shared_from_this()); 
+    accidents.push_back(accident);
 }
 
-std::string Car::getAccidentsInfo() const 
+std::string Car::getAccidentsInfo() const
 {
     if (accidents.empty()) return "No accidents recorded.";
 
     std::ostringstream oss;
-    for (const auto& accident : accidents) 
+    for (const auto& accident : accidents)
     {
-        oss << accident.getInfo() << "\n";
+        oss << accident->getInfo() << "\n";
     }
     return oss.str();
 }
 
-std::string Car::getInfo() const 
+std::string Car::getInfo() const
 {
     return "Plate: " + plateNumber + ", Brand: " + brand + ", Model: " + model +
         ", Color: " + color + ", Engine: " + engineNumber;

@@ -3,9 +3,9 @@
 #include <vector>
 #include "Car.h"
 
-class Owner 
+class Owner final : public std::enable_shared_from_this<Owner>
 {
-public:
+private:
     std::string name;
     std::string address;
     std::string phone;
@@ -14,6 +14,7 @@ public:
 
     Owner(const std::string& name, const std::string& address, const std::string& phone);
 
+public:
     void addCar(Car* car); 
     std::string getInfo() const;
 };
