@@ -1,4 +1,4 @@
-#include "../Library/MyExercise.h"
+п»ї#include "../Library/MyExercise.h"
 #include <iostream>
 #include <cmath> 
 
@@ -9,14 +9,14 @@ std::string MyExercise::title() const noexcept
 
 void MyExercise::Task1()
 {
-    out << "Выполнение задачи 1:" << std::endl;
+    out << "Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РґР°С‡Рё 1:" << std::endl;
 
-    for (int j = 0; j < matrix->getCols(); ++j) 
+    for (size_t j = 0; j < matrix->getCols(); ++j) 
     {
         int min_elem = (*matrix)[0][j]; 
         int min_row = 0;
 
-        for (int i = 1; i < matrix->getRows(); ++i) 
+        for (size_t i = 1; i < matrix->getRows(); ++i) 
         {
             if ((*matrix)[i][j] < min_elem)
             {
@@ -33,18 +33,18 @@ void MyExercise::Task1()
 
 void MyExercise::Task2()
 {
-    out << "Выполнение задачи 2:" << std::endl;
+    out << "Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РґР°С‡Рё 2:" << std::endl;
 
     std::vector<int> last_row = (*matrix)[matrix->getRows() - 1];
 
     std::vector<std::vector<int>> new_matrix;
 
-    for (int i = 0; i < matrix->getRows(); ++i)
+    for (size_t i = 0; i < matrix->getRows(); ++i)
     {
         new_matrix.push_back((*matrix)[i]); 
 
         int max_abs_elem = std::abs((*matrix)[i][0]);
-        for (int j = 1; j < matrix->getCols(); ++j)
+        for (size_t j = 1; j < matrix->getCols(); ++j)
         {
             if (std::abs((*matrix)[i][j]) > max_abs_elem)
             {
@@ -52,7 +52,7 @@ void MyExercise::Task2()
             }
         }
 
-        for (int j = 0; j < matrix->getCols(); ++j)
+        for (size_t j = 0; j < matrix->getCols(); ++j)
         {
             if (std::abs((*matrix)[i][j]) == max_abs_elem)
             {
@@ -64,5 +64,5 @@ void MyExercise::Task2()
 
     *matrix = new_matrix;
 
-    out << *matrix << std::endl;
+    out << *matrix << \n;
 }
