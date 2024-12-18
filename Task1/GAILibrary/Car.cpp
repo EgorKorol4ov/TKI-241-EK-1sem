@@ -35,3 +35,8 @@ std::string Car::getInfo() const
     return "Plate: " + plateNumber + ", Brand: " + brand + ", Model: " + model +
         ", Color: " + color + ", Engine: " + engineNumber;
 }
+
+std::shared_ptr<Owner> Car::getCurrentOwner()
+{
+    return this->currentOwner;
+}

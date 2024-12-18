@@ -25,4 +25,5 @@ public:
     void addAccident(const std::string& description);
     std::string getAccidentsInfo() const;
     std::string getInfo() const;
+    std::shared_ptr <Owner> getCurrentOwner();
 };

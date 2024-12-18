@@ -15,6 +15,6 @@ private:
     Owner(const std::string& name, const std::string& address, const std::string& phone);
 
 public:
-    void addCar(Car* car); 
+    void addCar(std::shared_ptr<Car>& car);
     std::string getInfo() const;
 };

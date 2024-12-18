@@ -35,4 +35,5 @@ void Accident::setDateFromString(const std::string& dateStr)
 void Accident::setCar(const std::shared_ptr<Car>& car)
 {
     this->car = car;
+    car = shared_from_this();
 }

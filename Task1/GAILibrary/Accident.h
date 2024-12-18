@@ -19,6 +19,6 @@ public:
     std::string getInfo() const;
     std::string dateToString() const;
     void setDateFromString(const std::string& dateStr);
-
     void setCar(const std::shared_ptr<Car>& car); 
+    std::shared_ptr<Car> car;
 };
